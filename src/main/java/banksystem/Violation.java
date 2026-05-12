@@ -1,18 +1,19 @@
 package banksystem;
 
 /**
- * Lớp này đã được định dạng lại chuẩn 2-space indentation.
+ * Lớp Violation đã sửa lỗi thụt lề 2-space.
  */
 public class Violation {
-    // Thụt lề đúng 2 dấu cách (Level 2)
-    private int accountValue;
+    // Dòng 8: 'member def modifier' - Thụt lề đúng 2 spaces
+    private int value;
 
     /**
-     * Phương thức kiểm tra với định dạng chuẩn.
+     * Phương thức kiểm tra.
      */
+    // Dòng 13: 'method def modifier' - Thụt lề đúng 2 spaces
     public void testMethod() {
-        // Bên trong phương thức thụt lề 4 dấu cách (Level 4)
+        // Dòng 15 & 16: 'method def' child - Thụt lề đúng 4 spaces (2+2)
         int shortName = 10;
-        System.out.println(accountValue + shortName);
-    } // Dấu đóng ngoặc thụt lề 2 dấu cách (Level 2)
+        System.out.println(value + shortName);
+    } // Dòng 17: 'method def rcurly' - Thụt lề đúng 2 spaces
 }
