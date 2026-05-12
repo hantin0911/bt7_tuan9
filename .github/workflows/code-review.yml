@@ -1,35 +1,27 @@
 name: Automated Code Review for Bai07
 
 on:
+  push:
+    branches: [ "main" ] # Chạy ngay khi push lên main
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'Bai07/**'
 
 jobs:
   checkstyle:
     name: Checkstyle Review
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Nâng cấp lên v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: 'maven'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4 # Nâng cấp lên v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
 
-    - name: Run Checkstyle
-      run: mvn checkstyle:check --file Bai07/pom.xml
-
-    - name: Checkstyle Inline Feedback
-      if: failure()
-      uses: dbelyaev/action-checkstyle@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        checkstyle_config: google_checks.xml
-        level: error
-        reporter: github-pr-review
+      - name: Run Checkstyle
+        # SỬA: Bỏ --file Bai07/pom.xml nếu pom.xml nằm ở gốc
+        run: mvn checkstyle:check
