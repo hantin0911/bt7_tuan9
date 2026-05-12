@@ -1,11 +1,20 @@
+package banksystem;
+
+/**
+ * Lớp Violation đã được sửa lỗi Javadoc và thụt lề theo chuẩn Google.
+ */
 public class Violation {
-    // 2 spaces
+
+    // Thụt lề 2 spaces cho biến (Member def)
     private int value;
 
-    // 2 spaces
+    /**
+     * Phương thức thực hiện kiểm tra và in giá trị ra màn hình.
+     */
+    // Thụt lề 2 spaces cho phương thức (Method def)
     public void testMethod() {
-        // 4 spaces (2 + 2)
+        // Thụt lề 4 spaces cho nội dung bên trong (Method def child)
         int shortName = 10;
         System.out.println(value + shortName);
-    } // 2 spaces
+    } // Thụt lề 2 spaces cho đóng ngoặc (Method def rcurly)
 }
