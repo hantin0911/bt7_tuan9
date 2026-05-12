@@ -2,26 +2,40 @@ name: Automated Code Review for Bai07
 
 on:
   push:
-    branches: [ "main" ] # Chạy ngay khi push lên main
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  checkstyle:
+  checkstyle_review:
     name: Checkstyle Review
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write # Cần thiết để bot có thể comment vào PR
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # Nâng cấp lên v4
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4 # Nâng cấp lên v4
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Run Checkstyle
-        # SỬA: Bỏ --file Bai07/pom.xml nếu pom.xml nằm ở gốc
+      # Bước 1: Chạy Maven Checkstyle để kiểm tra tổng thể và log lỗi ra console
+      - name: Run Maven Checkstyle
         run: mvn checkstyle:check
+
+      # Bước 2: Tự động đăng bình luận (Inline Feedback) nếu có lỗi
+      # Action này sẽ đọc cấu hình từ file google_checks.xml bạn đã khai báo trong POM
+      - name: Post Inline Feedback
+        if: failure() # Chỉ chạy nếu bước "Run Maven Checkstyle" ở trên báo lỗi
+        uses: dbelyaev/action-checkstyle@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          level: 'warning'
+          reporter: 'github-pr-review'
+          checkstyle_config: google_checks.xml
